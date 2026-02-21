@@ -442,6 +442,25 @@
         const text = banner.querySelector('.winner-text');
         text.textContent = t('winnerText', { name: rcv.winner });
         banner.classList.remove('hidden');
+        spawnConfetti();
+    }
+
+    function spawnConfetti() {
+        const container = $('#confetti-container');
+        container.innerHTML = '';
+        const colors = ['#1a7a6d', '#e8604c', '#f28e2b', '#4e79a7', '#76b7b2', '#edc948', '#59a14f'];
+        for (let i = 0; i < 40; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.top = Math.random() * 30 + '%';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.animationDelay = Math.random() * 0.8 + 's';
+            piece.style.width = (4 + Math.random() * 6) + 'px';
+            piece.style.height = (4 + Math.random() * 6) + 'px';
+            if (Math.random() > 0.5) piece.style.borderRadius = '50%';
+            container.appendChild(piece);
+        }
     }
 
 })();
