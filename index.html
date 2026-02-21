@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präferenzwahl — So funktioniert's</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            <h1 data-i18n="title">Präferenzwahl — So funktioniert's</h1>
+            <p class="intro" data-i18n="intro">
+                Bei der Präferenzwahl wählst du nicht nur einen Favoriten — du ordnest die Optionen
+                in der Reihenfolge, wie gut sie dir gefallen. Wenn keine Option mehr als die Hälfte
+                der Stimmen bekommt, fliegt die am wenigsten beliebte raus und deren Stimmen gehen
+                an die jeweils nächstbeste Wahl weiter. Das wiederholt sich, bis eine Option mehr
+                als die Hälfte hat!
+            </p>
+        </header>
+
+        <!-- Tabs -->
+        <nav class="tabs">
+            <button class="tab active" data-tab="example" data-i18n="tabExample">Beispiel ausprobieren</button>
+            <button class="tab" data-tab="custom" data-i18n="tabCustom">Eigene Abstimmung</button>
+            <button class="tab" data-tab="upload" data-i18n="tabUpload">Stimmzettel hochladen</button>
+        </nav>
+
+        <!-- Tab: Try the Example -->
+        <section id="tab-example" class="tab-content active">
+            <div class="example-info">
+                <h2 data-i18n="exampleTitle">Klassenfahrt-Abstimmung</h2>
+                <p data-i18n="exampleDesc">Eine Klasse mit 15 Schülern hat abgestimmt, wohin die Klassenfahrt gehen soll. Jeder hat die Ziele nach Wunsch sortiert.</p>
+                <div class="example-options">
+                    <span class="option-badge" data-i18n="optThemePark">Freizeitpark</span>
+                    <span class="option-badge" data-i18n="optMuseum">Museum</span>
+                    <span class="option-badge" data-i18n="optBeach">Strand</span>
+                    <span class="option-badge" data-i18n="optHiking">Wandern</span>
+                </div>
+                <button id="btn-count-example" class="btn btn-primary btn-large" data-i18n="btnCountVotes">Stimmen auszählen!</button>
+            </div>
+        </section>
+
+        <!-- Tab: Create Your Own Vote -->
+        <section id="tab-custom" class="tab-content">
+            <!-- Step 1: Setup candidates -->
+            <div id="custom-setup">
+                <h2 data-i18n="setupTitle">Schritt 1: Optionen festlegen</h2>
+                <p data-i18n="setupDesc">Worüber wird abgestimmt? Mindestens 2 Optionen hinzufügen.</p>
+                <div id="candidate-list">
+                    <div class="candidate-row">
+                        <input type="text" class="candidate-input" placeholder="Option 1" maxlength="40">
+                        <button class="btn btn-small btn-remove" title="Entfernen" data-i18n="btnRemoveTitle" data-i18n-attr="title">&times;</button>
+                    </div>
+                    <div class="candidate-row">
+                        <input type="text" class="candidate-input" placeholder="Option 2" maxlength="40">
+                        <button class="btn btn-small btn-remove" title="Entfernen" data-i18n="btnRemoveTitle" data-i18n-attr="title">&times;</button>
+                    </div>
+                </div>
+                <button id="btn-add-candidate" class="btn btn-secondary" data-i18n="btnAddOption">+ Option hinzufügen</button>
+                <br>
+                <button id="btn-start-voting" class="btn btn-primary" data-i18n="btnStartVoting">Abstimmung starten</button>
+            </div>
+
+            <!-- Step 2: Collect votes -->
+            <div id="custom-voting" class="hidden">
+                <h2 data-i18n="votingTitle">Schritt 2: Stimmen abgeben</h2>
+                <p data-i18n="votingDesc">Für jede Option eine Zahl eingeben, um die Reihenfolge festzulegen. <strong>1 = Lieblingsoption</strong>, 2 = zweite Wahl, usw. Leer lassen, wenn du eine Option nicht bewerten möchtest.</p>
+                <div id="voting-form"></div>
+                <div class="voting-actions">
+                    <button id="btn-submit-ballot" class="btn btn-primary" data-i18n="btnSubmitBallot">Stimmzettel abgeben</button>
+                    <span id="ballot-counter" class="ballot-counter">0 Stimmzettel abgegeben</span>
+                </div>
+                <div class="ballot-review">
+                    <label>
+                        <input type="checkbox" id="toggle-ballots"> <span data-i18n="showAllBallots">Alle Stimmzettel anzeigen</span>
+                    </label>
+                    <div id="ballot-list" class="hidden"></div>
+                </div>
+                <button id="btn-count-custom" class="btn btn-primary btn-large hidden" data-i18n="btnCountVotes">Stimmen auszählen!</button>
+                <button id="btn-back-setup" class="btn btn-secondary" data-i18n="btnBackSetup">Zurück zu Schritt 1</button>
+            </div>
+        </section>
+
+        <!-- Tab: Upload Ballots -->
+        <section id="tab-upload" class="tab-content">
+            <h2 data-i18n="uploadTitle">Excel-Datei hochladen</h2>
+            <p data-i18n="uploadDesc">Eine <code>.xlsx</code>-Datei hochladen, in der jede Zeile ein Stimmzettel ist. Die Spalten sind Rang 1, Rang 2, Rang 3 usw. In den Zellen stehen die Namen der Optionen.</p>
+            <div id="drop-zone" class="drop-zone">
+                <p data-i18n="dropZoneText">Datei hierher ziehen<br>oder</p>
+                <label class="btn btn-secondary">
+                    <span data-i18n="btnChooseFile">Datei auswählen</span>
+                    <input type="file" id="file-input" accept=".xlsx,.xls" hidden>
+                </label>
+            </div>
+            <div id="upload-status" class="hidden"></div>
+        </section>
+
+        <!-- Results (shared) -->
+        <section id="results" class="hidden">
+            <hr>
+            <h2 data-i18n="resultsTitle">Ergebnisse</h2>
+
+            <!-- Round-by-round -->
+            <div id="rounds-container"></div>
+            <button id="btn-next-round" class="btn btn-primary hidden" data-i18n="btnNextRound">Nächste Runde →</button>
+
+            <!-- Sankey (visible from first round, updates progressively) -->
+            <div id="sankey-container" class="hidden">
+                <h3 data-i18n="sankeyTitle">So haben sich die Stimmen bewegt</h3>
+                <div id="sankey-chart"></div>
+            </div>
+
+            <!-- FPTP comparison (shown after all rounds) -->
+            <div id="fptp-comparison" class="hidden">
+                <h3 data-i18n="fptpTitle">Was wäre, wenn nur die erste Wahl zählt?</h3>
+                <div id="fptp-content"></div>
+            </div>
+
+            <!-- Winner -->
+            <div id="winner-banner" class="hidden">
+                <div class="winner-text"></div>
+            </div>
+
+            <button id="btn-start-over" class="btn btn-secondary" data-i18n="btnStartOver">Neu starten</button>
+        </section>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/rcv-engine.js"></script>
+    <script src="js/sankey.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

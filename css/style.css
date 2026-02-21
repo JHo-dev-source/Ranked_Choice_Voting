@@ -1,0 +1,324 @@
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+}
+
+/* ── Header ── */
+header { text-align: center; margin-bottom: 28px; position: relative; }
+header h1 { font-size: 1.8rem; color: #1a1a2e; margin-bottom: 8px; }
+.intro { color: #555; max-width: 640px; margin: 0 auto; font-size: 0.95rem; }
+
+/* ── Language switcher ── */
+.lang-switcher {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 4px;
+}
+.lang-btn {
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s;
+}
+.lang-btn:hover { border-color: #4e79a7; color: #4e79a7; }
+.lang-btn.active {
+    background: #4e79a7;
+    color: #fff;
+    border-color: #4e79a7;
+}
+
+/* ── Tabs ── */
+.tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 24px;
+}
+.tab {
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+.tab:hover { color: #333; }
+.tab.active {
+    color: #4e79a7;
+    border-bottom-color: #4e79a7;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.hidden { display: none !important; }
+
+/* ── Buttons ── */
+.btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary { background: #4e79a7; color: #fff; }
+.btn-primary:hover { background: #3d6591; }
+
+.btn-secondary { background: #e8ecf1; color: #444; }
+.btn-secondary:hover { background: #dce1e8; }
+
+.btn-large { padding: 12px 32px; font-size: 1.05rem; }
+
+.btn-small {
+    padding: 4px 10px;
+    font-size: 1.1rem;
+    background: transparent;
+    color: #999;
+}
+.btn-small:hover { color: #e15759; }
+
+/* ── Example tab ── */
+.example-info { text-align: center; }
+.example-info h2 { margin-bottom: 8px; }
+.example-info p { margin-bottom: 16px; color: #555; }
+.example-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+.option-badge {
+    background: #e8ecf1;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* ── Custom voting ── */
+#custom-setup, #custom-voting { max-width: 500px; }
+#custom-setup h2, #custom-voting h2 { margin-bottom: 8px; }
+#custom-setup p, #custom-voting p { margin-bottom: 16px; color: #555; font-size: 0.9rem; }
+
+.candidate-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.candidate-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+.candidate-input:focus { outline: none; border-color: #4e79a7; }
+
+#btn-add-candidate { margin: 8px 0 16px; }
+
+/* Voting form */
+.vote-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+.vote-row label { flex: 1; font-weight: 500; }
+.vote-rank-input {
+    width: 50px;
+    padding: 6px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+.vote-rank-input:focus { outline: none; border-color: #4e79a7; }
+
+.voting-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0 12px;
+}
+.ballot-counter {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.ballot-review { margin: 12px 0 20px; }
+.ballot-review label { font-size: 0.85rem; color: #666; cursor: pointer; }
+
+#ballot-list {
+    margin-top: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+}
+.ballot-entry {
+    padding: 4px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.ballot-entry:last-child { border-bottom: none; }
+
+/* ── Upload ── */
+.drop-zone {
+    border: 2px dashed #bbb;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #888;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 16px;
+}
+.drop-zone.dragover {
+    border-color: #4e79a7;
+    background: #eef3fa;
+}
+.drop-zone p { margin-bottom: 12px; }
+
+#upload-status {
+    padding: 12px 16px;
+    background: #e8f5e9;
+    border-radius: 6px;
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+/* ── Results ── */
+#results { margin-top: 32px; }
+#results h2 { margin-bottom: 16px; }
+#results h3 { margin: 24px 0 12px; }
+
+.round-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+}
+.round-card h4 {
+    margin-bottom: 10px;
+    color: #4e79a7;
+}
+
+.round-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.round-table th, .round-table td {
+    padding: 6px 12px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+.round-table th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #888;
+    font-weight: 600;
+}
+.round-table .eliminated {
+    background: #fef0f0;
+    color: #c0392b;
+}
+.round-table .color-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.transfer-info {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #fafafa;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* FPTP comparison */
+#fptp-comparison {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 20px;
+}
+#fptp-comparison h3 { margin-top: 0; color: #f57f17; }
+.fptp-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+.fptp-winner-note {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #e65100;
+}
+
+/* Sankey */
+#sankey-container { margin-top: 20px; }
+#sankey-chart { width: 100%; min-height: 350px; }
+
+/* Winner */
+#winner-banner {
+    margin-top: 24px;
+    text-align: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-radius: 12px;
+}
+.winner-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+#btn-start-over { margin-top: 20px; }
+#btn-next-round { margin: 12px 0; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    header h1 { font-size: 1.3rem; }
+    .tabs { flex-wrap: wrap; }
+    .tab { padding: 8px 12px; font-size: 0.85rem; }
+    .container { padding: 16px 12px 40px; }
+}
